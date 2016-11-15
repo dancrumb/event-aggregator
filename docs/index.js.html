@@ -53,6 +53,13 @@ function removeFromArray(array, value) {
   return index;
 }
 
+/*
+ * This is the generic handler adder
+ * @param {string} eventName The event to handle
+ * @param {string} threshold Whether to trigger the listener on `"all"` or `"any"` event
+ * @param {string} frequency Whether to do this `"once"` or repeatedly (`"on"`)
+ * @param {function()} listener The listener to trigger on this event
+ */
 function addHandler(eventName, threshold, frequency, listener) {
   if (!this.listeners[eventName]) {
     this.listeners[eventName] = [];
@@ -126,7 +133,7 @@ class EventAggregator {
   /**
    * When instantiating an aggregator, you can pass it a single EventEmitter, a collection of
    * Emitters or nothing.
-   * @param {Array&lt;EventEmitter>|EventEmitter} [emitters]
+   * @param {EventEmitter[]|EventEmitter} [emitters=[]]
    */
   constructor(emitters = []) {
     if (!Array.isArray(emitters)) {
@@ -205,9 +212,16 @@ class EventAggregator {
   }
 
   /**
+   * If any of the emitters in this aggregator emits a `eventName` event, trigger the associated
+   * `listener`.
+   *
+   * Like `EventEmitter#on`, this will continue to fire until it is explicitly removed.
+   *
+   * The `listener` will receive a reference to the emitter that emitted the event and an array
+   * of the arguments that the event included.
    *
    * @param {string} eventName
-   * @param {function} listener
+   * @param {function(EventEmitter, Array)} listener
    */
   onAny(eventName, listener) {
     attachMasterListener.call(this, eventName);
@@ -215,9 +229,22 @@ class EventAggregator {
   }
 
   /**
+   * Once all of the emitters in this aggregator have emitted a `eventName` event, the associated
+   * `listener` is triggered.
+   *
+   * Like `EventEmitter#on`, this will continue to fire until it is explicitly removed.
+   *
+   * The `listener` will receive an array of the arguments from each of the events that were emitted
+   * from the aggregated emitters. The array is in the order in which the emitters were added to
+   * this aggregator.
+   *
+   * If an emitter has fired multiple times, the listener will get the arguments from the first
+   * event.
+   *
+   * Once the listener has been triggered, this aggregator is reset for this event.
    *
    * @param {string} eventName
-   * @param {function} listener
+   * @param {function(EventEmitter, Array)} listener
    */
   onAll(eventName, listener) {
     attachMasterListener.call(this, eventName);
@@ -225,9 +252,16 @@ class EventAggregator {
   }
 
   /**
+   * If any of the emitters in this aggregator emits a `eventName` event, trigger the associated
+   * `listener`.
+   *
+   * Like `EventEmitter#once`, the listener will be removed once it has been triggered.
+   *
+   * The `listener` will receive a reference to the emitter that emitted the event and an array
+   * of the arguments that the event included.
    *
    * @param {string} eventName
-   * @param {function} listener
+   * @param {function(EventEmitter, Array)} listener
    */
   onceAny(eventName, listener) {
     attachMasterListener.call(this, eventName);
@@ -235,9 +269,20 @@ class EventAggregator {
   }
 
   /**
+   * Once all of the emitters in this aggregator have emitted a `eventName` event, the associated
+   * `listener` is triggered.
+   *
+   * Like `EventEmitter#once`, the listener will be removed for this event.
+   *
+   * The `listener` will receive an array of the arguments from each of the events that were emitted
+   * from the aggregated emitters. The array is in the order in which the emitters were added to
+   *  aggregator.
+   *
+   * If an emitter has fired multiple times, the listener will get the arguments from the first
+   * event.
    *
    * @param {string} eventName
-   * @param {function} listener
+   * @param {function(EventEmitter, Array)} listener
    */
   onceAll(eventName, listener) {
     attachMasterListener.call(this, eventName);
@@ -245,6 +290,13 @@ class EventAggregator {
   }
 
   /**
+   * If there are listeners that are waiting for all of the emitters in this aggregation to emit,
+   * then calling this method will reset the aggregator so that it's as if none of them have
+   * emitted.
+   *
+   * If an `eventName` is provided, this is limited to listeners for that event. Otherwise, calling
+   * this resets all of the listeners.
+   *
    * @param {string} [eventName]
    */
   reset(eventName) {
@@ -258,7 +310,8 @@ class EventAggregator {
   }
 
   /**
-   *
+   * Calling this method removes all listeners from all emitters. It should be called to avoid
+   * memory leaks when you're done with the aggregator.
    */
   destroy() {
     this.emitters.forEach(this.removeEmitter.bind(this));

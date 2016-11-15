@@ -70,7 +70,7 @@ with them as a collection (rather than individuals)</p></div>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line86">line 86</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line93">line 93</a>
     </li></ul></dd>
     
 
@@ -141,6 +141,8 @@ Emitters or nothing.</p>
         
 
         
+        <th>Default</th>
+        
 
         <th class="last">Description</th>
     </tr>
@@ -178,6 +180,12 @@ Emitters or nothing.</p>
                 </td>
             
 
+            
+                <td class="default">
+                
+                    <code>[]</code>
+                
+                </td>
             
 
             <td class="description last"></td>
@@ -237,7 +245,7 @@ Emitters or nothing.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line119">line 119</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line126">line 126</a>
     </li></ul></dd>
     
 
@@ -371,7 +379,7 @@ Emitters or nothing.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line224">line 224</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line277">line 277</a>
     </li></ul></dd>
     
 
@@ -409,6 +417,11 @@ Emitters or nothing.</p>
 
 
 
+
+<div class="description">
+    <p>Calling this method removes all listeners from all emitters. It should be called to avoid
+memory leaks when you're done with the aggregator.</p>
+</div>
 
 
 
@@ -451,7 +464,7 @@ Emitters or nothing.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line109">line 109</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line116">line 116</a>
     </li></ul></dd>
     
 
@@ -554,7 +567,7 @@ Emitters or nothing.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line183">line 183</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line210">line 210</a>
     </li></ul></dd>
     
 
@@ -592,6 +605,18 @@ Emitters or nothing.</p>
 
 
 
+
+<div class="description">
+    <p>Once all of the emitters in this aggregator have emitted a <code>eventName</code> event, the associated
+<code>listener</code> is triggered.</p>
+<p>Like <code>EventEmitter#on</code>, this will continue to fire until it is explicitly removed.</p>
+<p>The <code>listener</code> will receive an array of the arguments from each of the events that were emitted
+from the aggregated emitters. The array is in the order in which the emitters were added to
+this aggregator.</p>
+<p>If an emitter has fired multiple times, the listener will get the arguments from the first
+event.</p>
+<p>Once the listener has been triggered, this aggregator is reset for this event.</p>
+</div>
 
 
 
@@ -706,7 +731,7 @@ Emitters or nothing.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line173">line 173</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line187">line 187</a>
     </li></ul></dd>
     
 
@@ -744,6 +769,14 @@ Emitters or nothing.</p>
 
 
 
+
+<div class="description">
+    <p>If any of the emitters in this aggregator emits a <code>eventName</code> event, trigger the associated
+<code>listener</code>.</p>
+<p>Like <code>EventEmitter#on</code>, this will continue to fire until it is explicitly removed.</p>
+<p>The <code>listener</code> will receive a reference to the emitter that emitted the event and an array
+of the arguments that the event included.</p>
+</div>
 
 
 
@@ -858,7 +891,7 @@ Emitters or nothing.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line203">line 203</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line248">line 248</a>
     </li></ul></dd>
     
 
@@ -896,6 +929,17 @@ Emitters or nothing.</p>
 
 
 
+
+<div class="description">
+    <p>Once all of the emitters in this aggregator have emitted a <code>eventName</code> event, the associated
+<code>listener</code> is triggered.</p>
+<p>Like <code>EventEmitter#once</code>, the listener will be removed for this event.</p>
+<p>The <code>listener</code> will receive an array of the arguments from each of the events that were emitted
+from the aggregated emitters. The array is in the order in which the emitters were added to
+ aggregator.</p>
+<p>If an emitter has fired multiple times, the listener will get the arguments from the first
+event.</p>
+</div>
 
 
 
@@ -1010,7 +1054,7 @@ Emitters or nothing.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line193">line 193</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line227">line 227</a>
     </li></ul></dd>
     
 
@@ -1048,6 +1092,14 @@ Emitters or nothing.</p>
 
 
 
+
+<div class="description">
+    <p>If any of the emitters in this aggregator emits a <code>eventName</code> event, trigger the associated
+<code>listener</code>.</p>
+<p>Like <code>EventEmitter#once</code>, the listener will be removed once it has been triggered.</p>
+<p>The <code>listener</code> will receive a reference to the emitter that emitted the event and an array
+of the arguments that the event included.</p>
+</div>
 
 
 
@@ -1162,7 +1214,7 @@ Emitters or nothing.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line139">line 139</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line146">line 146</a>
     </li></ul></dd>
     
 
@@ -1301,7 +1353,7 @@ fires the <code>onAll</code> and <code>onceAll</code> listeners.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line162">line 162</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line169">line 169</a>
     </li></ul></dd>
     
 
@@ -1457,7 +1509,7 @@ fires the <code>onAll</code> and <code>onceAll</code> listeners.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line211">line 211</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line263">line 263</a>
     </li></ul></dd>
     
 
@@ -1495,6 +1547,14 @@ fires the <code>onAll</code> and <code>onceAll</code> listeners.</p>
 
 
 
+
+<div class="description">
+    <p>If there are listeners that are waiting for all of the emitters in this aggregation to emit,
+then calling this method will reset the aggregator so that it's as if none of them have
+emitted.</p>
+<p>If an <code>eventName</code> is provided, this is limited to listeners for that event. Otherwise, calling
+this resets all of the listeners.</p>
+</div>
 
 
 
