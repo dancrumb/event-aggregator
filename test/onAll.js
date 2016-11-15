@@ -2,7 +2,6 @@ import EmitterFactory from './EmitterFactory';
 import EventAggregator from '../src/index';
 
 describe('EventAggregator#onAll', () => {
-
   it('fires an event when all constituent events have fired', (done) => {
     EmitterFactory.reset();
     const triggers = EmitterFactory.create(4);
@@ -16,16 +15,15 @@ describe('EventAggregator#onAll', () => {
 
     tick()
       .then(() => {
-        expect(eventSpy).not.to.have.been.called;
+        expect(eventSpy).not.to.have.been.called();
         triggers[1].alpha();
         triggers[2].alpha();
         triggers[3].alpha();
 
         return tick();
-
       })
       .then(() => {
-        expect(eventSpy).to.have.been.calledOnce;
+        expect(eventSpy).to.have.been.calledOnce();
         expect(eventSpy).to.have.been.calledWith([[0], [1], [2], [3]]);
 
         triggers[3].alpha();
@@ -34,12 +32,11 @@ describe('EventAggregator#onAll', () => {
         triggers[0].alpha();
 
         return tick();
-
       })
       .then(() => {
-        expect(eventSpy).to.have.been.calledTwice;
+        expect(eventSpy).to.have.been.calledTwice();
         expect(eventSpy).to.have.been.calledWith([[0], [1], [2], [3]]);
-        done()
+        done();
       });
   });
 
@@ -59,9 +56,9 @@ describe('EventAggregator#onAll', () => {
     aggregator.removeEmitter(triggers[2]);
 
     process.nextTick(() => {
-      expect(eventSpy).to.have.been.calledOnce;
+      expect(eventSpy).to.have.been.calledOnce();
       expect(eventSpy).to.have.been.calledWith([[0], [1], [3]]);
-      done()
+      done();
     });
   });
 
@@ -77,8 +74,8 @@ describe('EventAggregator#onAll', () => {
     aggregator.removeEmitter(triggers[0]);
 
     process.nextTick(() => {
-      expect(eventSpy).not.to.have.been.called;
-      done()
+      expect(eventSpy).not.to.have.been.called();
+      done();
     });
   });
 
@@ -100,7 +97,7 @@ describe('EventAggregator#onAll', () => {
 
     tick()
       .then(() => {
-        expect(eventSpy).not.to.have.been.called;
+        expect(eventSpy).not.to.have.been.called();
 
         triggers[0].alpha();
         triggers[1].alpha();
@@ -109,9 +106,9 @@ describe('EventAggregator#onAll', () => {
         return tick();
       })
       .then(() => {
-        expect(eventSpy).to.have.been.calledOnce;
+        expect(eventSpy).to.have.been.calledOnce();
         expect(eventSpy).to.have.been.calledWith([[0], [1], [2], [3]]);
-        done()
+        done();
       });
   });
 
@@ -131,8 +128,8 @@ describe('EventAggregator#onAll', () => {
 
     tick()
       .then(() => {
-        expect(alphaSpy).to.have.been.calledOnce;
-        expect(betaSpy).to.have.been.calledOnce;
+        expect(alphaSpy).to.have.been.calledOnce();
+        expect(betaSpy).to.have.been.calledOnce();
 
         aggregator.removeListener('alpha', alphaSpy);
 
@@ -142,8 +139,8 @@ describe('EventAggregator#onAll', () => {
         return tick();
       })
       .then(() => {
-        expect(alphaSpy).to.have.been.calledOnce;
-        expect(betaSpy).to.have.been.calledTwice;
+        expect(alphaSpy).to.have.been.calledOnce();
+        expect(betaSpy).to.have.been.calledTwice();
 
         aggregator.removeListener('beta', betaSpy);
 
@@ -153,8 +150,8 @@ describe('EventAggregator#onAll', () => {
         return tick();
       })
       .then(() => {
-        expect(alphaSpy).to.have.been.calledOnce;
-        expect(betaSpy).to.have.been.calledTwice;
+        expect(alphaSpy).to.have.been.calledOnce();
+        expect(betaSpy).to.have.been.calledTwice();
         done();
       });
   });

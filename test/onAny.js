@@ -14,18 +14,18 @@ describe('EventAggregator#onAny', () => {
 
     tick()
       .then(() => {
-        expect(eventSpy).to.have.been.calledOnce;
+        expect(eventSpy).to.have.been.calledOnce();
         triggers[1].alpha();
         return tick();
       })
       .then(() => {
-        expect(eventSpy).to.have.been.calledTwice;
+        expect(eventSpy).to.have.been.calledTwice();
         triggers[0].alpha();
         return tick();
       })
       .then(() => {
-        expect(eventSpy).to.have.been.calledThrice;
-        done()
+        expect(eventSpy).to.have.been.calledThrice();
+        done();
       });
   });
 
@@ -45,8 +45,8 @@ describe('EventAggregator#onAny', () => {
 
     tick()
       .then(() => {
-        expect(alphaSpy).to.have.been.calledOnce;
-        expect(betaSpy).to.have.been.calledOnce;
+        expect(alphaSpy).to.have.been.calledOnce();
+        expect(betaSpy).to.have.been.calledOnce();
 
         aggregator.removeListener('alpha', alphaSpy);
 
@@ -56,8 +56,8 @@ describe('EventAggregator#onAny', () => {
         return tick();
       })
       .then(() => {
-        expect(alphaSpy).to.have.been.calledOnce;
-        expect(betaSpy).to.have.been.calledTwice;
+        expect(alphaSpy).to.have.been.calledOnce();
+        expect(betaSpy).to.have.been.calledTwice();
 
         aggregator.removeListener('beta', betaSpy);
 
@@ -67,8 +67,27 @@ describe('EventAggregator#onAny', () => {
         return tick();
       })
       .then(() => {
-        expect(alphaSpy).to.have.been.calledOnce;
-        expect(betaSpy).to.have.been.calledTwice;
+        expect(alphaSpy).to.have.been.calledOnce();
+        expect(betaSpy).to.have.been.calledTwice();
+        done();
+      });
+  });
+
+  it('provides a reference to the event source', (done) => {
+    EmitterFactory.reset();
+    const triggers = EmitterFactory.create(4);
+    const aggregator = new EventAggregator(triggers);
+
+    const eventSpy = sinon.spy();
+
+    aggregator.onAny('alpha', eventSpy);
+
+    triggers[0].alpha();
+
+    tick()
+      .then(() => {
+        expect(eventSpy).to.have.been.calledOnce();
+        expect(eventSpy).to.have.been.calledWith(triggers[0], [0]);
         done();
       });
   });

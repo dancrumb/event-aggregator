@@ -1,6 +1,6 @@
 import glob from 'glob';
 import _ from 'lodash';
-import wallaby from './wallaby';
+import wallaby from '../wallaby';
 
 const fakeWallaby = {
   compilers: {

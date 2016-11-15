@@ -1,5 +1,6 @@
 --compilers js:babel-register
 --require test/test_helper.js
+test/buildMochaOpts.js
 test/EmitterFactory.js
 test/onAll.js
 test/onAny.js

@@ -1,4 +1,5 @@
-import TestEmitter from './TestEmitter'
+import TestEmitter from './TestEmitter';
+
 let counter = 0;
 
 class EmitterFactory {
@@ -8,7 +9,7 @@ class EmitterFactory {
 
     while (emittersCreated < emittersRequested) {
       emitters.push(new TestEmitter(counter));
-      emittersCreated++;
+      emittersCreated += 1;
       counter += 1;
     }
 

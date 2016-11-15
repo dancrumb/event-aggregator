@@ -1,1 +1,10 @@
 src/
+test/buildMochaOpts.js
+wallaby.js
+.travis.yml
+.eslintignore
+.eslintrc
+.babelrc
+.codeclimate.yml
+.istanbul.yml
+jsdoc.json

@@ -8,9 +8,10 @@
   },
   "globals": {
     "expect": false,
-    "is": false,
+    "it": false,
     "describe": false,
-    "sinon": false
+    "sinon": false,
+    "tick": false
   },
   "rules": {
     "chai-expect/missing-assertion": 2,

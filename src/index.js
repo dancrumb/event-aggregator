@@ -86,8 +86,13 @@ class EventAggregator {
           const callListener = allFired || !waitForAll;
 
           if (callListener) {
-            listener.fn.call(aggregator, waitForAll ? listener.eventArgs.slice() : eventArguments);
-            clearFiredEvents(listener);
+            if (waitForAll) {
+              listener.fn.call(aggregator, listener.eventArgs.slice());
+              clearFiredEvents(listener);
+            } else {
+              listener.fn.call(aggregator, sourceEmitter, eventArguments);
+              clearFiredEvents(listener);
+            }
           }
 
           return !(callListener && (listener.frequency === 'once'));
