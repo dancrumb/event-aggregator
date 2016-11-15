@@ -31,3 +31,15 @@ buttons.onAny('click', (source, eventArguments) => {
   console.log('A button was clicked!');
 });
 ```
+
+## Installation
+Oyez can be installed easily with `npm`
+
+```bash
+npm install oyez
+```
+
+Currently, `oyez` has no dependencies for installation.
+
+## API
+

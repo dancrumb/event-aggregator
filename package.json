@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "An Event Aggregator for node.js",
   "main": "lib/index.js",
+  "files": [
+    "lib/"
+  ],
   "scripts": {
     "buildMochaOpts": "babel-node test/buildMochaOpts.js > test/mocha.opts",
     "test": "babel-node node_modules/.bin/isparta cover _mocha",

@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>index.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="EventAggregator.html">EventAggregator</a><ul class='methods'><li data-type='method'><a href="EventAggregator.html#addEmitter">addEmitter</a></li><li data-type='method'><a href="EventAggregator.html#destroy">destroy</a></li><li data-type='method'><a href="EventAggregator.html#eventsListenedTo">eventsListenedTo</a></li><li data-type='method'><a href="EventAggregator.html#getMasterListener">getMasterListener</a></li><li data-type='method'><a href="EventAggregator.html#onAll">onAll</a></li><li data-type='method'><a href="EventAggregator.html#onAny">onAny</a></li><li data-type='method'><a href="EventAggregator.html#onceAll">onceAll</a></li><li data-type='method'><a href="EventAggregator.html#onceAny">onceAny</a></li><li data-type='method'><a href="EventAggregator.html#removeEmitter">removeEmitter</a></li><li data-type='method'><a href="EventAggregator.html#removeListener">removeListener</a></li><li data-type='method'><a href="EventAggregator.html#reset">reset</a></li></ul></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">index.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/*
+ * Removes `value` from `array`, assuming it exists.
+ *
+ * It will only remove the first instance of `value`. It returns the index (of the original array)
+ * that was removed. Therefore, callers can check for `-1` to see if nothing as removed.
+ */
+function removeFromArray(array, value) {
+  const index = array.indexOf(value);
+
+  if (index >= 0) {
+    array.splice(index, 1);
+  }
+
+  return index;
+}
+
+function addHandler(eventName, threshold, frequency, listener) {
+  if (!this.listeners[eventName]) {
+    this.listeners[eventName] = [];
+  }
+
+  const handler = {
+    threshold,
+    frequency,
+    fn: listener,
+    eventArgs: Array(this.emitters.length).fill(false),
+  };
+
+  this.listeners[eventName].push(handler);
+}
+
+function attachMasterListener(eventName) {
+  const masterListener = this.getMasterListener(eventName);
+  if (!(eventName in this.listeners)) {
+    this.emitters.forEach(emitter => emitter.on(eventName, masterListener));
+  }
+}
+
+function clearFiredEvents(listener) {
+  listener.eventArgs.fill(false);
+}
+
+/**
+ *
+ */
+class EventAggregator {
+  /**
+   *
+   * @param {Array&lt;EventEmitter>|EventEmitter} [emitters]
+   */
+  constructor(emitters = []) {
+    if (!Array.isArray(emitters)) {
+      this.emitters = [emitters];
+    }
+
+    this.listeners = {};
+    this.masterListeners = {};
+  }
+
+  /**
+   *
+   * @param eventName
+   * @returns {*}
+   */
+  getMasterListener(eventName) {
+    const aggregator = this;
+    if (!this.masterListeners[eventName]) {
+      this.masterListeners[eventName] = (...eventArguments) => {
+        const sourceEmitter = this;
+        const listeners = aggregator.listeners[eventName];
+        const emitterIndex = aggregator.emitters.indexOf(sourceEmitter);
+        if (emitterIndex &lt; 0) {
+          throw new Error('Somehow called the listener with an emitter that we are not aggregating');
+        }
+
+        aggregator.listeners[eventName] = listeners.filter((listener) => {
+          listener.eventArgs[emitterIndex] = eventArguments;
+
+          const allFired = (listener.eventArgs.indexOf(false) &lt; 0);
+          const callListener = allFired || !(listener.threshold === 'all');
+
+          if (callListener) {
+            listener.fn.apply(aggregator, (listener.threshold === 'all') ? [listener.eventArgs] : eventArguments);
+            clearFiredEvents(listener);
+          }
+
+          return !(callListener &amp;&amp; (listener.frequency === 'once'));
+        });
+      };
+    }
+
+    return this.masterListeners[eventName];
+  }
+
+  /**
+   *
+   * @returns {Array}
+   */
+  eventsListenedTo() {
+    return Object.keys(this.listeners);
+  }
+
+  /**
+   *
+   * @param {EventEmitter} emitter
+   */
+  addEmitter(emitter) {
+    this.emitters.push(emitter);
+    this.eventNames.forEach((eventName) => {
+      emitter.on(eventName, this.masterListener);
+    });
+  }
+
+  /**
+   *
+   * @param {EventEmitter} emitter
+   */
+  removeEmitter(emitter) {
+    removeFromArray(this.emitters, emitter);
+
+    this.eventsListenedTo().forEach((eventName) => {
+      emitter.removeListener(eventName, this.masterListener);
+    });
+  }
+
+  /**
+   *
+   * @param {string} eventName
+   * @param {function} listenerToRemove
+   */
+  removeListener(eventName, listenerToRemove) {
+    const listeners = this.listeners[eventName] || [];
+
+    this.listeners[eventName] = listeners.filter(listener => listener.fn !== listenerToRemove);
+  }
+
+  /**
+   *
+   * @param {string} eventName
+   * @param {function} listenerToRemove
+   */
+  onAny(eventName, listener) {
+    attachMasterListener.call(this, eventName);
+    addHandler.call(this, eventName, 'any', 'on', listener);
+  }
+
+  /**
+   *
+   * @param {string} eventName
+   * @param {function} listenerToRemove
+   */
+  onAll(eventName, listener) {
+    attachMasterListener.call(this, eventName);
+    addHandler.call(this, eventName, 'all', 'on', listener);
+  }
+
+  /**
+   *
+   * @param {string} eventName
+   * @param {function} listenerToRemove
+   */
+  onceAny(eventName, listener) {
+    attachMasterListener.call(this, eventName);
+    addHandler.call(this, eventName, 'any', 'once', listener);
+  }
+
+  /**
+   *
+   * @param {string} eventName
+   * @param {function} listenerToRemove
+   */
+  onceAll(eventName, listener) {
+    attachMasterListener.call(this, eventName);
+    addHandler.call(this, eventName, 'all', 'once', listener);
+  }
+
+  /**
+   *
+   */
+  reset() {
+    Object.keys(this.listeners).forEach((eventName) => {
+      this.listeners[eventName].forEach(clearFiredEvents);
+    });
+  }
+
+  /**
+   *
+   */
+  destroy() {
+    this.emitters.forEach(this.removeEmitter.bind(this));
+    this.listeners = null;
+  }
+}
+
+export default EventAggregator;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Sun Nov 13 2016 17:02:21 GMT-0600 (CST) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>
