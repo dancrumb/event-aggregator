@@ -1,8 +1,11 @@
 Oyez
 ====
+[![NPM](https://nodei.co/npm/oyez.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/oyez/)
+
 [![Code Climate](https://codeclimate.com/github/dancrumb/oyez/badges/gpa.svg)](https://codeclimate.com/github/dancrumb/oyez)
 [![Test Coverage](https://codeclimate.com/github/dancrumb/oyez/badges/coverage.svg)](https://codeclimate.com/github/dancrumb/oyez/coverage)
 [![Build Status](https://travis-ci.org/dancrumb/oyez.svg?branch=master)](https://travis-ci.org/dancrumb/oyez)
+[![dependencies Status](https://david-dm.org/dancrumb/oyez/status.svg)](https://david-dm.org/dancrumb/oyez)
 
 Oyez is an Event Aggregator for node.js. You can use it to provide a consolidated interface to groups
 of EventEmitters.
@@ -42,7 +45,7 @@ npm install oyez
 Currently, `oyez` has no dependencies for installation.
 
 ## API
-The full API is documented at [http://dancrumb.com/oyez/index.html].
+The full API is documented at [http://dancrumb.com/oyez/index.html](http://dancrumb.com/oyez/index.html).
 
 ## Tests
 If you've pulled this from Github (rather than installed it from npm), you may wish to 

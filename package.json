@@ -11,6 +11,7 @@
     "test": "babel-node node_modules/.bin/isparta cover _mocha",
     "build": "babel src -d lib",
     "lint": "eslint -c .eslintrc src test ./*.js",
+    "prepublish": "npm run-script generate-docs",
     "generate-docs": "jsdoc -c jsdoc.json -R README.md"
   },
   "repository": {
