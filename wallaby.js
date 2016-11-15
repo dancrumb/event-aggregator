@@ -12,7 +12,7 @@ module.exports = function wallabyConfig(wallaby) {
       'test/*.js',
       '!test/test_helper.js',
       '!test/EmitterFactory.js',
-      '!test/TestEmitter.js'
+      '!test/TestEmitter.js',
     ],
     compilers: {
       '**/*.js': wallaby.compilers.babel(),

@@ -68,7 +68,7 @@ class EventAggregator {
     const aggregator = this;
 
     if (!this.masterListeners[eventName]) {
-      this.masterListeners[eventName] = function (...eventArguments) {
+      this.masterListeners[eventName] = function masterListener(...eventArguments) {
         const sourceEmitter = this;
         const listeners = aggregator.listeners[eventName];
 
@@ -113,7 +113,7 @@ class EventAggregator {
   addEmitter(emitter) {
     this.emitters.push(emitter);
     Object.keys(this.listeners).forEach((eventName) => {
-      emitter.on(eventName, this.masterListener);
+      emitter.on(eventName, this.getMasterListener(eventName));
     });
   }
 
@@ -152,7 +152,7 @@ class EventAggregator {
   /**
    *
    * @param {string} eventName
-   * @param {function} listenerToRemove
+   * @param {function} listener
    */
   onAny(eventName, listener) {
     attachMasterListener.call(this, eventName);
@@ -162,7 +162,7 @@ class EventAggregator {
   /**
    *
    * @param {string} eventName
-   * @param {function} listenerToRemove
+   * @param {function} listener
    */
   onAll(eventName, listener) {
     attachMasterListener.call(this, eventName);
@@ -172,7 +172,7 @@ class EventAggregator {
   /**
    *
    * @param {string} eventName
-   * @param {function} listenerToRemove
+   * @param {function} listener
    */
   onceAny(eventName, listener) {
     attachMasterListener.call(this, eventName);
@@ -182,7 +182,7 @@ class EventAggregator {
   /**
    *
    * @param {string} eventName
-   * @param {function} listenerToRemove
+   * @param {function} listener
    */
   onceAll(eventName, listener) {
     attachMasterListener.call(this, eventName);

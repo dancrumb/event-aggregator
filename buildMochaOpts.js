@@ -1,6 +1,6 @@
-import wallaby from './wallaby';
 import glob from 'glob';
 import _ from 'lodash';
+import wallaby from './wallaby';
 
 const fakeWallaby = {
   compilers: {
@@ -17,6 +17,6 @@ const compilers = config.compilers['**/*.js'];
 
 const testFiles = _(config.tests).map(wildcard => glob.sync(wildcard)).flatten();
 
-console.log(`--compilers ${compilers}`);
-console.log(`--require ${mochaRequire}`);
-console.log(testFiles.join('\n'));
+console.log(`--compilers ${compilers}`); // eslint-disable-line no-console
+console.log(`--require ${mochaRequire}`); // eslint-disable-line no-console
+console.log(testFiles.join('\n')); // eslint-disable-line no-console
