@@ -7,7 +7,7 @@
     "lib/"
   ],
   "scripts": {
-    "buildMochaOpts": "babel-node test/buildMochaOpts.js > test/mocha.opts",
+    "pretest":  "babel-node test/buildMochaOpts.js > test/mocha.opts",
     "test": "babel-node node_modules/.bin/isparta cover _mocha",
     "build": "babel src -d lib",
     "lint": "eslint -c .eslintrc src test ./*.js",
@@ -22,6 +22,7 @@
     "aggregator"
   ],
   "author": "Dan Rumney <dancrumb@gmail.com>",
+  "homepage": "http://dancrumb.com/oyez",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/dancrumb/oyez/issues"
