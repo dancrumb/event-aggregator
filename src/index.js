@@ -68,8 +68,7 @@ class EventAggregator {
     const aggregator = this;
 
     if (!this.masterListeners[eventName]) {
-      this.masterListeners[eventName] = function () {
-        const eventArguments = arguments;
+      this.masterListeners[eventName] = function (...eventArguments) {
         const sourceEmitter = this;
         const listeners = aggregator.listeners[eventName];
 
@@ -137,7 +136,6 @@ class EventAggregator {
         }
       });
     });
-
   }
 
   /**
@@ -198,8 +196,8 @@ class EventAggregator {
     if (eventName) {
       this.listeners[eventName].forEach(clearFiredEvents);
     } else {
-      Object.keys(this.listeners).forEach((eventName) => {
-        this.reset(eventName);
+      Object.keys(this.listeners).forEach((name) => {
+        this.reset(name);
       });
     }
   }

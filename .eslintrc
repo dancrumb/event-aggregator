@@ -17,7 +17,7 @@
   ],
   "rules": {
     "no-constant-condition": 0,
-    "indent": ["error", 2],
+    "indent": 2,
     "no-param-reassign": ["error", { "props": false }]
   }
 }
