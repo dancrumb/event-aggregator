@@ -62,7 +62,7 @@ function addHandler(eventName, threshold, frequency, listener) {
     threshold,
     frequency,
     fn: listener,
-    eventArgs: Array(this.emitters.length).fill(false),
+    eventArgs: new Array(this.emitters.length).fill(null),
   };
 
   this.listeners[eventName].push(handler);
@@ -76,7 +76,7 @@ function attachMasterListener(eventName) {
 }
 
 function clearFiredEvents(listener) {
-  listener.eventArgs.fill(false);
+  listener.eventArgs.fill(null);
 }
 
 /**
@@ -90,6 +90,8 @@ class EventAggregator {
   constructor(emitters = []) {
     if (!Array.isArray(emitters)) {
       this.emitters = [emitters];
+    } else {
+      this.emitters = emitters;
     }
 
     this.listeners = {};
@@ -103,24 +105,33 @@ class EventAggregator {
    */
   getMasterListener(eventName) {
     const aggregator = this;
+
     if (!this.masterListeners[eventName]) {
-      this.masterListeners[eventName] = (...eventArguments) => {
+      this.masterListeners[eventName] = function masterListener(...eventArguments) {
         const sourceEmitter = this;
         const listeners = aggregator.listeners[eventName];
+
         const emitterIndex = aggregator.emitters.indexOf(sourceEmitter);
         if (emitterIndex &lt; 0) {
           throw new Error('Somehow called the listener with an emitter that we are not aggregating');
         }
 
         aggregator.listeners[eventName] = listeners.filter((listener) => {
-          listener.eventArgs[emitterIndex] = eventArguments;
+          listener.eventArgs[emitterIndex] = Array.prototype.slice.call(eventArguments);
 
-          const allFired = (listener.eventArgs.indexOf(false) &lt; 0);
-          const callListener = allFired || !(listener.threshold === 'all');
+          const allFired = (listener.eventArgs.indexOf(null) &lt; 0);
+          const waitForAll = (listener.threshold === 'all');
+
+          const callListener = allFired || !waitForAll;
 
           if (callListener) {
-            listener.fn.apply(aggregator, (listener.threshold === 'all') ? [listener.eventArgs] : eventArguments);
-            clearFiredEvents(listener);
+            if (waitForAll) {
+              listener.fn.call(aggregator, listener.eventArgs.slice());
+              clearFiredEvents(listener);
+            } else {
+              listener.fn.call(aggregator, sourceEmitter, eventArguments);
+              clearFiredEvents(listener);
+            }
           }
 
           return !(callListener &amp;&amp; (listener.frequency === 'once'));
@@ -145,8 +156,8 @@ class EventAggregator {
    */
   addEmitter(emitter) {
     this.emitters.push(emitter);
-    this.eventNames.forEach((eventName) => {
-      emitter.on(eventName, this.masterListener);
+    Object.keys(this.listeners).forEach((eventName) => {
+      emitter.on(eventName, this.getMasterListener(eventName));
     });
   }
 
@@ -155,10 +166,19 @@ class EventAggregator {
    * @param {EventEmitter} emitter
    */
   removeEmitter(emitter) {
-    removeFromArray(this.emitters, emitter);
+    const removedIndex = removeFromArray(this.emitters, emitter);
 
     this.eventsListenedTo().forEach((eventName) => {
-      emitter.removeListener(eventName, this.masterListener);
+      emitter.removeListener(eventName, this.getMasterListener(eventName));
+      this.listeners[eventName].forEach((listener) => {
+        listener.eventArgs.splice(removedIndex, 1);
+        const allFired = (listener.eventArgs.indexOf(null) &lt; 0) &amp;&amp; listener.eventArgs.length > 0;
+
+        if (allFired) {
+          listener.fn.call(this, listener.eventArgs.slice());
+          clearFiredEvents(listener);
+        }
+      });
     });
   }
 
@@ -176,7 +196,7 @@ class EventAggregator {
   /**
    *
    * @param {string} eventName
-   * @param {function} listenerToRemove
+   * @param {function} listener
    */
   onAny(eventName, listener) {
     attachMasterListener.call(this, eventName);
@@ -186,7 +206,7 @@ class EventAggregator {
   /**
    *
    * @param {string} eventName
-   * @param {function} listenerToRemove
+   * @param {function} listener
    */
   onAll(eventName, listener) {
     attachMasterListener.call(this, eventName);
@@ -196,7 +216,7 @@ class EventAggregator {
   /**
    *
    * @param {string} eventName
-   * @param {function} listenerToRemove
+   * @param {function} listener
    */
   onceAny(eventName, listener) {
     attachMasterListener.call(this, eventName);
@@ -206,7 +226,7 @@ class EventAggregator {
   /**
    *
    * @param {string} eventName
-   * @param {function} listenerToRemove
+   * @param {function} listener
    */
   onceAll(eventName, listener) {
     attachMasterListener.call(this, eventName);
@@ -214,12 +234,16 @@ class EventAggregator {
   }
 
   /**
-   *
+   * @param {string} [eventName]
    */
-  reset() {
-    Object.keys(this.listeners).forEach((eventName) => {
+  reset(eventName) {
+    if (eventName) {
       this.listeners[eventName].forEach(clearFiredEvents);
-    });
+    } else {
+      Object.keys(this.listeners).forEach((name) => {
+        this.reset(name);
+      });
+    }
   }
 
   /**
@@ -244,7 +268,7 @@ export default EventAggregator;
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Sun Nov 13 2016 17:02:21 GMT-0600 (CST) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Tue Nov 15 2016 12:12:07 GMT-0600 (CST) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>
