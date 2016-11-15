@@ -1,0 +1,9 @@
+--compilers js:babel-register
+--require test/test_helper.js
+test/EmitterFactory.js
+test/onAll.js
+test/onAny.js
+test/onceAll.js
+test/onceAny.js
+test/test_helper.js
+test/TestEmitter.js

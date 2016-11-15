@@ -1,2 +1,2 @@
-# event-aggregator
-Event Aggregator for node.js
+# Oyez
+Oyez is an Event Aggregator for node.js
