@@ -15,9 +15,6 @@
   "extends": [
     "airbnb"
   ],
-  "plugins": [
-    "json"
-  ],
   "rules": {
     "no-constant-condition": 0,
     "indent": ["error", 2],
