@@ -22,7 +22,7 @@
 <label for="nav-trigger" class="overlay"></label>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="EventAggregator.html">EventAggregator</a><ul class='methods'><li data-type='method'><a href="EventAggregator.html#addEmitter">addEmitter</a></li><li data-type='method'><a href="EventAggregator.html#destroy">destroy</a></li><li data-type='method'><a href="EventAggregator.html#eventsListenedTo">eventsListenedTo</a></li><li data-type='method'><a href="EventAggregator.html#getMasterListener">getMasterListener</a></li><li data-type='method'><a href="EventAggregator.html#onAll">onAll</a></li><li data-type='method'><a href="EventAggregator.html#onAny">onAny</a></li><li data-type='method'><a href="EventAggregator.html#onceAll">onceAll</a></li><li data-type='method'><a href="EventAggregator.html#onceAny">onceAny</a></li><li data-type='method'><a href="EventAggregator.html#removeEmitter">removeEmitter</a></li><li data-type='method'><a href="EventAggregator.html#removeListener">removeListener</a></li><li data-type='method'><a href="EventAggregator.html#reset">reset</a></li></ul></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="EventAggregator.html">EventAggregator</a><ul class='methods'><li data-type='method'><a href="EventAggregator.html#addEmitter">addEmitter</a></li><li data-type='method'><a href="EventAggregator.html#destroy">destroy</a></li><li data-type='method'><a href="EventAggregator.html#eventsListenedTo">eventsListenedTo</a></li><li data-type='method'><a href="EventAggregator.html#onAll">onAll</a></li><li data-type='method'><a href="EventAggregator.html#onAny">onAny</a></li><li data-type='method'><a href="EventAggregator.html#onceAll">onceAll</a></li><li data-type='method'><a href="EventAggregator.html#onceAny">onceAny</a></li><li data-type='method'><a href="EventAggregator.html#removeEmitter">removeEmitter</a></li><li data-type='method'><a href="EventAggregator.html#removeListener">removeListener</a></li><li data-type='method'><a href="EventAggregator.html#reset">reset</a></li></ul></li></ul>
 </nav>
 
 <div id="main">
@@ -43,6 +43,9 @@
         EventAggregator
         </h2>
         
+            <div class="class-description"><p>The EventAggregator provides a way to bring EventEmitters together into a group and to interact
+with them as a collection (rather than individuals)</p></div>
+        
     
 </header>
 
@@ -51,6 +54,8 @@
     
         
 
+    
+    <h2>Constructor</h2>
     
 
     <h4 class="name" id="EventAggregator"><span class="type-signature"></span>new EventAggregator<span class="signature">(emitters<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
@@ -65,7 +70,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line46">line 46</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line86">line 86</a>
     </li></ul></dd>
     
 
@@ -103,6 +108,11 @@
 
 
 
+
+<div class="description">
+    <p>When instantiating an aggregator, you can pass it a single EventEmitter, a collection of
+Emitters or nothing.</p>
+</div>
 
 
 
@@ -227,7 +237,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line118">line 118</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line119">line 119</a>
     </li></ul></dd>
     
 
@@ -265,6 +275,11 @@
 
 
 
+
+<div class="description">
+    <p>Add an emitter to the group.</p>
+<p>Any listeners that are currently defined will be automatically added to this emitter.</p>
+</div>
 
 
 
@@ -356,7 +371,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line213">line 213</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line224">line 224</a>
     </li></ul></dd>
     
 
@@ -424,7 +439,7 @@
 
     
 
-    <h4 class="name" id="eventsListenedTo"><span class="type-signature"></span>eventsListenedTo<span class="signature">()</span><span class="type-signature"> &rarr; {Array}</span></h4>
+    <h4 class="name" id="eventsListenedTo"><span class="type-signature"></span>eventsListenedTo<span class="signature">()</span><span class="type-signature"> &rarr; {Array.&lt;string>}</span></h4>
 
     
 
@@ -436,7 +451,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line110">line 110</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line109">line 109</a>
     </li></ul></dd>
     
 
@@ -474,6 +489,11 @@
 
 
 
+
+<div class="description">
+    <p>Provides a list of the events that the aggregator is listening for.</p>
+<p>NB: This doesn't mean that there are necessarily any handlers attached to these events.</p>
+</div>
 
 
 
@@ -508,149 +528,7 @@
     </dt>
     <dd>
         
-<span class="param-type">Array</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-        
-            
-
-    
-
-    <h4 class="name" id="getMasterListener"><span class="type-signature"></span>getMasterListener<span class="signature">(eventName)</span><span class="type-signature"> &rarr; {*}</span></h4>
-
-    
-
-
-
-
-<dl class="details">
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line67">line 67</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>eventName</code></td>
-            
-
-            <td class="type">
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-
-
-<dl class="param-type">
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">*</span>
+<span class="param-type">Array.&lt;string></span>
 
 
     </dd>
@@ -676,7 +554,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line172">line 172</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line183">line 183</a>
     </li></ul></dd>
     
 
@@ -828,7 +706,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line162">line 162</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line173">line 173</a>
     </li></ul></dd>
     
 
@@ -980,7 +858,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line192">line 192</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line203">line 203</a>
     </li></ul></dd>
     
 
@@ -1132,7 +1010,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line182">line 182</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line193">line 193</a>
     </li></ul></dd>
     
 
@@ -1284,7 +1162,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line129">line 129</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line139">line 139</a>
     </li></ul></dd>
     
 
@@ -1322,6 +1200,16 @@
 
 
 
+
+<div class="description">
+    <p>Removers an emitter from the group.</p>
+<p>Any listeners attached to this emitter are also removed.</p>
+<p>If any listeners are attached via onAll or onceAll, then removing this emitter may result in
+those listeners being fired. This will happen if the emitter that is being removed is the only
+one in the group that hadn't fired.</p>
+<p>Put another way, if <em>all</em> of the emitters except this one had fired, then removing this one
+fires the <code>onAll</code> and <code>onceAll</code> listeners.</p>
+</div>
 
 
 
@@ -1413,7 +1301,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line151">line 151</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line162">line 162</a>
     </li></ul></dd>
     
 
@@ -1451,6 +1339,10 @@
 
 
 
+
+<div class="description">
+    <p>Removes a listener from the aggregator (just like EventEmitter#removeListener)</p>
+</div>
 
 
 
@@ -1503,7 +1395,7 @@
 
             
 
-            <td class="description last"></td>
+            <td class="description last"><p>The name of the event from which we're removing a listener</p></td>
         </tr>
 
     
@@ -1526,7 +1418,7 @@
 
             
 
-            <td class="description last"></td>
+            <td class="description last"><p>The listener that we wish to remove</p></td>
         </tr>
 
     
@@ -1565,7 +1457,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line200">line 200</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line211">line 211</a>
     </li></ul></dd>
     
 
