@@ -26,9 +26,9 @@ With Oyez, you can do that easily:
 ```javascript
 
 const buttons = new EventAggregator();
-buttons.add(okButton);
-buttons.add(cancelButton);
-buttons.add(applyButton);
+buttons.addSource(okButton);
+buttons.addSource(cancelButton);
+buttons.addSource(applyButton);
 
 buttons.onAny('click', (source, eventArguments) => {
   console.log('A button was clicked!');
