@@ -22,7 +22,27 @@
 <label for="nav-trigger" class="overlay"></label>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="EventAggregator.html">EventAggregator</a><ul class='methods'><li data-type='method'><a href="EventAggregator.html#addEmitter">addEmitter</a></li><li data-type='method'><a href="EventAggregator.html#destroy">destroy</a></li><li data-type='method'><a href="EventAggregator.html#eventsListenedTo">eventsListenedTo</a></li><li data-type='method'><a href="EventAggregator.html#onAll">onAll</a></li><li data-type='method'><a href="EventAggregator.html#onAny">onAny</a></li><li data-type='method'><a href="EventAggregator.html#onceAll">onceAll</a></li><li data-type='method'><a href="EventAggregator.html#onceAny">onceAny</a></li><li data-type='method'><a href="EventAggregator.html#removeEmitter">removeEmitter</a></li><li data-type='method'><a href="EventAggregator.html#removeListener">removeListener</a></li><li data-type='method'><a href="EventAggregator.html#reset">reset</a></li></ul></li></ul>
+    <h2><a href="index.html">Home</a></h2>
+    <h3>Classes</h3>
+    <ul>
+        <li><a href="EventAggregator.html">EventAggregator</a>
+            <ul class='methods'>
+                <li data-type='method'><a href="EventAggregator.html#addSource">addSource</a></li>
+                <li data-type='method'><a href="EventAggregator.html#destroy">destroy</a></li>
+                <li data-type='method'><a href="EventAggregator.html#eventsListenedTo">eventsListenedTo</a>
+                </li>
+                <li data-type='method'><a href="EventAggregator.html#onAll">onAll</a></li>
+                <li data-type='method'><a href="EventAggregator.html#onAny">onAny</a></li>
+                <li data-type='method'><a href="EventAggregator.html#onceAll">onceAll</a></li>
+                <li data-type='method'><a href="EventAggregator.html#onceAny">onceAny</a></li>
+                <li data-type='method'><a
+                        href="EventAggregator.html#removeListener">removeListener</a></li>
+                <li data-type='method'><a href="EventAggregator.html#removeSource">removeSource</a>
+                </li>
+                <li data-type='method'><a href="EventAggregator.html#reset">reset</a></li>
+            </ul>
+        </li>
+    </ul>
 </nav>
 
 <div id="main">
@@ -56,9 +76,12 @@ with them as a collection (rather than individuals)</p></div>
 
     
     <h2>Constructor</h2>
-    
 
-    <h4 class="name" id="EventAggregator"><span class="type-signature"></span>new EventAggregator<span class="signature">(emitters<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+
+        <h4 class="name" id="EventAggregator"><span class="type-signature"></span>new
+            EventAggregator<span class="signature">(sources<span
+                    class="signature-attributes">opt</span>)</span><span
+                    class="type-signature"></span></h4>
 
     
 
@@ -152,8 +175,8 @@ Emitters or nothing.</p>
     
 
         <tr>
-            
-                <td class="name"><code>emitters</code></td>
+
+            <td class="name"><code>sources</code></td>
             
 
             <td class="type">
@@ -228,12 +251,9 @@ Emitters or nothing.</p>
     
         <h3 class="subsection-title">Methods</h3>
 
-        
-            
 
-    
-
-    <h4 class="name" id="addEmitter"><span class="type-signature"></span>addEmitter<span class="signature">(emitter)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="addSource"><span class="type-signature"></span>addSource<span
+            class="signature">(source)</span><span class="type-signature"></span></h4>
 
     
 
@@ -285,8 +305,8 @@ Emitters or nothing.</p>
 
 
 <div class="description">
-    <p>Add an emitter to the group.</p>
-<p>Any listeners that are currently defined will be automatically added to this emitter.</p>
+    <p>Add a source source to the group.</p>
+    <p>Any listeners that are currently defined will be automatically added to this source.</p>
 </div>
 
 
@@ -323,8 +343,8 @@ Emitters or nothing.</p>
     
 
         <tr>
-            
-                <td class="name"><code>emitter</code></td>
+
+            <td class="name"><code>source</code></td>
             
 
             <td class="type">
@@ -419,7 +439,7 @@ Emitters or nothing.</p>
 
 
 <div class="description">
-    <p>Calling this method removes all listeners from all emitters. It should be called to avoid
+    <p>Calling this method removes all listeners from all sources. It should be called to avoid
 memory leaks when you're done with the aggregator.</p>
 </div>
 
@@ -607,13 +627,15 @@ memory leaks when you're done with the aggregator.</p>
 
 
 <div class="description">
-    <p>Once all of the emitters in this aggregator have emitted a <code>eventName</code> event, the associated
+    <p>Once all of the sources in this aggregator have emitted a <code>eventName</code> event, the
+        associated
 <code>listener</code> is triggered.</p>
 <p>Like <code>EventEmitter#on</code>, this will continue to fire until it is explicitly removed.</p>
 <p>The <code>listener</code> will receive an array of the arguments from each of the events that were emitted
-from the aggregated emitters. The array is in the order in which the emitters were added to
+    from the aggregated sources. The array is in the order in which the sources were added to
 this aggregator.</p>
-<p>If an emitter has fired multiple times, the listener will get the arguments from the first
+    <p>If a source has emitted an event multiple times, the listener will get the arguments from the
+        first
 event.</p>
 <p>Once the listener has been triggered, this aggregator is reset for this event.</p>
 </div>
@@ -771,7 +793,8 @@ event.</p>
 
 
 <div class="description">
-    <p>If any of the emitters in this aggregator emits a <code>eventName</code> event, trigger the associated
+    <p>If any of the sources in this aggregator emits a <code>eventName</code> event, trigger the
+        associated
 <code>listener</code>.</p>
 <p>Like <code>EventEmitter#on</code>, this will continue to fire until it is explicitly removed.</p>
 <p>The <code>listener</code> will receive a reference to the emitter that emitted the event and an array
@@ -931,14 +954,15 @@ of the arguments that the event included.</p>
 
 
 <div class="description">
-    <p>Once all of the emitters in this aggregator have emitted a <code>eventName</code> event, the associated
+    <p>Once all of the sources in this aggregator have emitted a <code>eventName</code> event, the
+        associated
 <code>listener</code> is triggered.</p>
 <p>Like <code>EventEmitter#once</code>, the listener will be removed for this event.</p>
 <p>The <code>listener</code> will receive an array of the arguments from each of the events that were emitted
-from the aggregated emitters. The array is in the order in which the emitters were added to
+    from the aggregated sources. The array is in the order in which the sources were added to
  aggregator.</p>
-<p>If an emitter has fired multiple times, the listener will get the arguments from the first
-event.</p>
+    <p>If a source has emitted events multiple times, the listener will get the arguments from the
+        first event.</p>
 </div>
 
 
@@ -1094,10 +1118,12 @@ event.</p>
 
 
 <div class="description">
-    <p>If any of the emitters in this aggregator emits a <code>eventName</code> event, trigger the associated
+    <p>If any of the sources in this aggregator emits a <code>eventName</code> event, trigger the
+        associated
 <code>listener</code>.</p>
 <p>Like <code>EventEmitter#once</code>, the listener will be removed once it has been triggered.</p>
-<p>The <code>listener</code> will receive a reference to the emitter that emitted the event and an array
+    <p>The <code>listener</code> will receive a reference to the source that emitted the event and
+        an array
 of the arguments that the event included.</p>
 </div>
 
@@ -1183,165 +1209,9 @@ of the arguments that the event included.</p>
 </table>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
-    
-
-    <h4 class="name" id="removeEmitter"><span class="type-signature"></span>removeEmitter<span class="signature">(emitter)</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-
-<dl class="details">
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line146">line 146</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-<div class="description">
-    <p>Removers an emitter from the group.</p>
-<p>Any listeners attached to this emitter are also removed.</p>
-<p>If any listeners are attached via onAll or onceAll, then removing this emitter may result in
-those listeners being fired. This will happen if the emitter that is being removed is the only
-one in the group that hadn't fired.</p>
-<p>Put another way, if <em>all</em> of the emitters except this one had fired, then removing this one
-fires the <code>onAll</code> and <code>onceAll</code> listeners.</p>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>emitter</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">EventEmitter</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
-    
-
-    <h4 class="name" id="removeListener"><span class="type-signature"></span>removeListener<span class="signature">(eventName, listenerToRemove)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="removeListener"><span class="type-signature"></span>removeListener<span
+            class="signature">(eventName, listenerToRemove)</span><span
+            class="type-signature"></span></h4>
 
     
 
@@ -1430,47 +1300,160 @@ fires the <code>onAll</code> and <code>onceAll</code> listeners.</p>
     
 
         <tr>
-            
-                <td class="name"><code>eventName</code></td>
+
+            <td class="name"><code>eventName</code></td>
             
 
             <td class="type">
-            
-                
-<span class="param-type">string</span>
+
+
+                <span class="param-type">string</span>
 
 
             
             </td>
 
-            
 
-            
+            <td class="description last"><p>The name of the event from which we're removing a
+                listener</p></td>
+        </tr>
 
-            <td class="description last"><p>The name of the event from which we're removing a listener</p></td>
+
+        <tr>
+
+            <td class="name"><code>listenerToRemove</code></td>
+
+
+            <td class="type">
+
+
+                <span class="param-type">function</span>
+
+
+            </td>
+
+
+            <td class="description last"><p>The listener that we wish to remove</p></td>
         </tr>
 
     
+    </tbody>
+</table>
+
+
+    <h4 class="name" id="removeSource"><span class="type-signature"></span>removeSource<span
+            class="signature">(source)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line146">line 146</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Removers a source from the group.</p>
+    <p>Any listeners attached to this source are also removed.</p>
+    <p>If any listeners are attached via onAll or onceAll, then removing this source may result in
+        those listeners being fired. This will happen if the source that is being removed is the
+        only
+        one in the group that hadn't emitted an event.</p>
+    <p>Put another way, if <em>all</em> of the sources except this one had fired, then removing this
+        one
+        fires the <code>onAll</code> and <code>onceAll</code> listeners.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
 
         <tr>
-            
-                <td class="name"><code>listenerToRemove</code></td>
+
+            <td class="name"><code>source</code></td>
             
 
             <td class="type">
-            
-                
-<span class="param-type">function</span>
+
+
+                <span class="param-type">EventEmitter</span>
 
 
             
             </td>
 
-            
 
-            
-
-            <td class="description last"><p>The listener that we wish to remove</p></td>
+            <td class="description last"></td>
         </tr>
 
     
@@ -1549,7 +1532,7 @@ fires the <code>onAll</code> and <code>onceAll</code> listeners.</p>
 
 
 <div class="description">
-    <p>If there are listeners that are waiting for all of the emitters in this aggregation to emit,
+    <p>If there are listeners that are waiting for all of the sources in this aggregation to emit,
 then calling this method will reset the aggregator so that it's as if none of them have
 emitted.</p>
 <p>If an <code>eventName</code> is provided, this is limited to listeners for that event. Otherwise, calling

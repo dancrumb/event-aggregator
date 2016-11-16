@@ -18,7 +18,7 @@ They provide a great way to decouple parts of a system.
 Sometimes, you want to be able to create groups of EventEmitters as a single source
 of events.
 
-For instance, let's say you have a group of emitters that can all emit a `'click'` event.
+For instance, let's say you have a group of sources that can all emit a `'click'` event.
 Let's say, also, that you want to trigger a handler should _any_ of them emit such an event.
 
 With Oyez, you can do that easily:
@@ -45,6 +45,15 @@ npm install oyez
 Currently, `oyez` has no dependencies for installation.
 
 ## API
+The API has 4 interesting methods:
+
+* `onAll`: like `EventEmitter#on`, but only triggers listeners when *all* of the sources have 
+    emitted 
+* `onAny`: like `EventEmitter#on`, but triggers listeners when *any* of the sources have emitted
+* `onceAll`: like `EventEmitter#once`, but only triggers listeners when *all* of the sources have 
+emitted
+* `onceAny`: like `EventEmitter#once`, but triggers listeners when *any* of the sources have emitted
+
 The full API is documented at [http://dancrumb.com/oyez/index.html](http://dancrumb.com/oyez/index.html).
 
 ## Tests

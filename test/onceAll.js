@@ -52,7 +52,7 @@ describe('EventAggregator#onceAll', () => {
     triggers[1].alpha();
     triggers[3].alpha();
 
-    aggregator.removeEmitter(triggers[2]);
+    aggregator.removeSource(triggers[2]);
 
     process.nextTick(() => {
       expect(eventSpy).to.have.been.calledOnce();
@@ -70,7 +70,7 @@ describe('EventAggregator#onceAll', () => {
 
     aggregator.onceAll('alpha', eventSpy);
 
-    aggregator.removeEmitter(triggers[0]);
+    aggregator.removeSource(triggers[0]);
 
     process.nextTick(() => {
       expect(eventSpy).not.to.have.been.called();

@@ -1,7 +1,7 @@
 import EmitterFactory from './EmitterFactory';
 import EventAggregator from '../src/index';
 
-describe('EventAggregator#addEmitter', () => {
+describe('EventAggregator#addSource', () => {
   it('adds an emitter to an aggregator', (done) => {
     const triggers = EmitterFactory.create(3);
     const aggregator = new EventAggregator(triggers[2]);
@@ -9,7 +9,7 @@ describe('EventAggregator#addEmitter', () => {
     const eventSpy = sinon.spy();
 
     aggregator.onAny('alpha', eventSpy);
-    aggregator.addEmitter(triggers[0]);
+    aggregator.addSource(triggers[0]);
 
     triggers[0].alpha();
 
@@ -21,7 +21,7 @@ describe('EventAggregator#addEmitter', () => {
       })
       .then(() => {
         expect(eventSpy).to.have.been.calledOnce();
-        aggregator.addEmitter(triggers[1]);
+        aggregator.addSource(triggers[1]);
         triggers[1].alpha();
         return tick();
       })
