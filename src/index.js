@@ -34,6 +34,19 @@ function addHandler(eventName, threshold, frequency, listener) {
   };
 
   this.listeners[eventName].push(handler);
+
+  const numberOfListeners = this.listeners[eventName].length;
+  if (numberOfListeners > this.getMaxListeners() && !this.warned) {
+    const w = new Error('Possible EventAggregator memory leak detected. ' +
+      `${numberOfListeners} ${eventName} listeners added. ` +
+      'Use aggregator.setMaxListeners() to increase limit');
+    w.name = 'Warning';
+    w.type = eventName;
+    w.count = numberOfListeners;
+
+    process.emitWarning(w);
+    this.warned = true;
+  }
 }
 
 function clearFiredEvents(listener) {
@@ -113,7 +126,7 @@ class EventAggregator {
    * NB: This doesn't mean that there are necessarily any handlers attached to these events.
    * @returns {Array<string>}
    */
-  eventsListenedTo() {
+  eventNames() {
     return Object.keys(this.listeners);
   }
 
@@ -146,7 +159,7 @@ class EventAggregator {
   removeEmitter(emitter) {
     const removedIndex = removeFromArray(this.emitters, emitter);
 
-    this.eventsListenedTo().forEach((eventName) => {
+    this.eventNames().forEach((eventName) => {
       emitter.removeListener(eventName, getMasterListener.call(this, eventName));
       this.listeners[eventName].forEach((listener) => {
         listener.eventArgs.splice(removedIndex, 1);
@@ -251,6 +264,49 @@ class EventAggregator {
   }
 
   /**
+   * Returns the number of listeners listening to the event named eventName.
+   *
+   * @param {string|Symbol} eventName
+   * @returns {Number}
+   */
+  listenerCount(eventName) {
+    return Object.keys(this.listeners[eventName] || {}).length;
+  }
+
+  /**
+   * Returns the current max listener value for the EventAggregator which is either set by
+   * aggregator#setMaxListeners(n) or defaults to EventAggregator.defaultMaxListeners.
+   *
+   * @returns {Number}
+   */
+  getMaxListeners() {
+    if ('maxListeners' in this) {
+      return this.maxListeners;
+    }
+
+    return EventAggregator.defaultMaxListeners;
+  }
+
+  /**
+   * By default EventEmitters will print a warning if more than 10 listeners are added for a
+   * particular event. This is a useful default that helps finding memory leaks. Obviously, not all
+   * events should be limited to just 10 listeners. The emitter.setMaxListeners() method allows the
+   * limit to be modified for this specific EventEmitter instance.
+   *
+   * The value can be set to Infinity (or 0) to indicate an unlimited number of listeners.
+   *
+   * @param max
+   *
+   * @returns {EventAggregator} a regerence to this aggregator so that calls can be chained.
+   */
+  setMaxListeners(max) {
+    this.maxListeners = max;
+    if (this.warned) {
+      this.warned = false;
+    }
+    return this;
+  }
+  /**
    * If there are listeners that are waiting for all of the emitters in this aggregation to emit,
    * then calling this method will reset the aggregator so that it's as if none of them have
    * emitted.
@@ -279,5 +335,16 @@ class EventAggregator {
     this.listeners = null;
   }
 }
+
+/**
+ * The default maximum number of listeners that can be attached to an
+ * event before a warning is emitted.
+ *
+ * This will be used be all instances of EventEggregator that have not
+ * manually set this value
+ *
+ * @type {number}
+ */
+EventAggregator.defaultMaxListeners = 10;
 
 export default EventAggregator;
