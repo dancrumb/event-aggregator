@@ -21,7 +21,7 @@ describe('EventAggregator#maxListeners', () => {
         expect(warningSpy).to.have.been.calledOnce();
         aggregator.onAny('alpha', () => {});
         return tick();
-        })
+      })
       .then(() => {
         expect(warningSpy).to.have.been.calledOnce();
         aggregator.onAny('beta', eventSpy);
