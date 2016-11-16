@@ -30,7 +30,7 @@ function addHandler(eventName, threshold, frequency, listener) {
     threshold,
     frequency,
     fn: listener,
-    eventArgs: new Array(this.emitters.length).fill(null),
+    eventArgs: new Array(this.sources.length).fill(null),
   };
 
   this.listeners[eventName].push(handler);
@@ -61,7 +61,7 @@ function getMasterListener(eventName) {
       const sourceEmitter = this;
       const listeners = aggregator.listeners[eventName];
 
-      const emitterIndex = aggregator.emitters.indexOf(sourceEmitter);
+      const emitterIndex = aggregator.sources.indexOf(sourceEmitter);
       if (emitterIndex < 0) {
         throw new Error('Somehow called the listener with an emitter that we are not aggregating');
       }
@@ -95,7 +95,7 @@ function getMasterListener(eventName) {
 function attachMasterListener(eventName) {
   const masterListener = getMasterListener.call(this, eventName);
   if (!(eventName in this.listeners)) {
-    this.emitters.forEach(emitter => emitter.on(eventName, masterListener));
+    this.sources.forEach(emitter => emitter.on(eventName, masterListener));
   }
 }
 
@@ -107,13 +107,13 @@ class EventAggregator {
   /**
    * When instantiating an aggregator, you can pass it a single EventEmitter, a collection of
    * Emitters or nothing.
-   * @param {EventEmitter[]|EventEmitter} [emitters=[]]
+   * @param {EventEmitter[]|EventEmitter} [sources=[]]
    */
-  constructor(emitters = []) {
-    if (!Array.isArray(emitters)) {
-      this.emitters = [emitters];
+  constructor(sources = []) {
+    if (!Array.isArray(sources)) {
+      this.sources = [sources];
     } else {
-      this.emitters = emitters;
+      this.sources = sources;
     }
 
     this.listeners = {};
@@ -131,36 +131,36 @@ class EventAggregator {
   }
 
   /**
-   * Add an emitter to the group.
+   * Add a source source to the group.
    *
-   * Any listeners that are currently defined will be automatically added to this emitter.
-   * @param {EventEmitter} emitter
+   * Any listeners that are currently defined will be automatically added to this source.
+   * @param {EventEmitter} source
    */
-  addEmitter(emitter) {
-    this.emitters.push(emitter);
+  addSource(source) {
+    this.sources.push(source);
     Object.keys(this.listeners).forEach((eventName) => {
-      emitter.on(eventName, getMasterListener.call(this, eventName));
+      source.on(eventName, getMasterListener.call(this, eventName));
     });
   }
 
   /**
-   * Removers an emitter from the group.
+   * Removers a source from the group.
    *
-   * Any listeners attached to this emitter are also removed.
+   * Any listeners attached to this source are also removed.
    *
-   * If any listeners are attached via onAll or onceAll, then removing this emitter may result in
-   * those listeners being fired. This will happen if the emitter that is being removed is the only
-   * one in the group that hadn't fired.
+   * If any listeners are attached via onAll or onceAll, then removing this source may result in
+   * those listeners being fired. This will happen if the source that is being removed is the only
+   * one in the group that hadn't emitted an event.
    *
-   * Put another way, if *all* of the emitters except this one had fired, then removing this one
+   * Put another way, if *all* of the sources except this one had fired, then removing this one
    * fires the `onAll` and `onceAll` listeners.
-   * @param {EventEmitter} emitter
+   * @param {EventEmitter} source
    */
-  removeEmitter(emitter) {
-    const removedIndex = removeFromArray(this.emitters, emitter);
+  removeSource(source) {
+    const removedIndex = removeFromArray(this.sources, source);
 
     this.eventNames().forEach((eventName) => {
-      emitter.removeListener(eventName, getMasterListener.call(this, eventName));
+      source.removeListener(eventName, getMasterListener.call(this, eventName));
       this.listeners[eventName].forEach((listener) => {
         listener.eventArgs.splice(removedIndex, 1);
         const allFired = (listener.eventArgs.indexOf(null) < 0) && listener.eventArgs.length > 0;
@@ -186,7 +186,7 @@ class EventAggregator {
   }
 
   /**
-   * If any of the emitters in this aggregator emits a `eventName` event, trigger the associated
+   * If any of the sources in this aggregator emits a `eventName` event, trigger the associated
    * `listener`.
    *
    * Like `EventEmitter#on`, this will continue to fire until it is explicitly removed.
@@ -203,16 +203,16 @@ class EventAggregator {
   }
 
   /**
-   * Once all of the emitters in this aggregator have emitted a `eventName` event, the associated
+   * Once all of the sources in this aggregator have emitted a `eventName` event, the associated
    * `listener` is triggered.
    *
    * Like `EventEmitter#on`, this will continue to fire until it is explicitly removed.
    *
    * The `listener` will receive an array of the arguments from each of the events that were emitted
-   * from the aggregated emitters. The array is in the order in which the emitters were added to
+   * from the aggregated sources. The array is in the order in which the sources were added to
    * this aggregator.
    *
-   * If an emitter has fired multiple times, the listener will get the arguments from the first
+   * If a source has emitted an event multiple times, the listener will get the arguments from the first
    * event.
    *
    * Once the listener has been triggered, this aggregator is reset for this event.
@@ -226,12 +226,12 @@ class EventAggregator {
   }
 
   /**
-   * If any of the emitters in this aggregator emits a `eventName` event, trigger the associated
+   * If any of the sources in this aggregator emits a `eventName` event, trigger the associated
    * `listener`.
    *
    * Like `EventEmitter#once`, the listener will be removed once it has been triggered.
    *
-   * The `listener` will receive a reference to the emitter that emitted the event and an array
+   * The `listener` will receive a reference to the source that emitted the event and an array
    * of the arguments that the event included.
    *
    * @param {string} eventName
@@ -243,17 +243,17 @@ class EventAggregator {
   }
 
   /**
-   * Once all of the emitters in this aggregator have emitted a `eventName` event, the associated
+   * Once all of the sources in this aggregator have emitted a `eventName` event, the associated
    * `listener` is triggered.
    *
    * Like `EventEmitter#once`, the listener will be removed for this event.
    *
    * The `listener` will receive an array of the arguments from each of the events that were emitted
-   * from the aggregated emitters. The array is in the order in which the emitters were added to
+   * from the aggregated sources. The array is in the order in which the sources were added to
    *  aggregator.
    *
-   * If an emitter has fired multiple times, the listener will get the arguments from the first
-   * event.
+   * If a source has emitted events multiple times, the listener will get the arguments from the
+   * first event.
    *
    * @param {string} eventName
    * @param {function(EventEmitter, Array)} listener
@@ -307,7 +307,7 @@ class EventAggregator {
     return this;
   }
   /**
-   * If there are listeners that are waiting for all of the emitters in this aggregation to emit,
+   * If there are listeners that are waiting for all of the sources in this aggregation to emit,
    * then calling this method will reset the aggregator so that it's as if none of them have
    * emitted.
    *
@@ -327,11 +327,11 @@ class EventAggregator {
   }
 
   /**
-   * Calling this method removes all listeners from all emitters. It should be called to avoid
+   * Calling this method removes all listeners from all sources. It should be called to avoid
    * memory leaks when you're done with the aggregator.
    */
   destroy() {
-    this.emitters.forEach(this.removeEmitter.bind(this));
+    this.sources.forEach(this.removeSource.bind(this));
     this.listeners = null;
   }
 }
