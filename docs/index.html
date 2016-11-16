@@ -22,7 +22,27 @@
 <label for="nav-trigger" class="overlay"></label>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="EventAggregator.html">EventAggregator</a><ul class='methods'><li data-type='method'><a href="EventAggregator.html#addEmitter">addEmitter</a></li><li data-type='method'><a href="EventAggregator.html#destroy">destroy</a></li><li data-type='method'><a href="EventAggregator.html#eventsListenedTo">eventsListenedTo</a></li><li data-type='method'><a href="EventAggregator.html#onAll">onAll</a></li><li data-type='method'><a href="EventAggregator.html#onAny">onAny</a></li><li data-type='method'><a href="EventAggregator.html#onceAll">onceAll</a></li><li data-type='method'><a href="EventAggregator.html#onceAny">onceAny</a></li><li data-type='method'><a href="EventAggregator.html#removeEmitter">removeEmitter</a></li><li data-type='method'><a href="EventAggregator.html#removeListener">removeListener</a></li><li data-type='method'><a href="EventAggregator.html#reset">reset</a></li></ul></li></ul>
+    <h2><a href="index.html">Home</a></h2>
+    <h3>Classes</h3>
+    <ul>
+        <li><a href="EventAggregator.html">EventAggregator</a>
+            <ul class='methods'>
+                <li data-type='method'><a href="EventAggregator.html#addSource">addSource</a></li>
+                <li data-type='method'><a href="EventAggregator.html#destroy">destroy</a></li>
+                <li data-type='method'><a href="EventAggregator.html#eventsListenedTo">eventsListenedTo</a>
+                </li>
+                <li data-type='method'><a href="EventAggregator.html#onAll">onAll</a></li>
+                <li data-type='method'><a href="EventAggregator.html#onAny">onAny</a></li>
+                <li data-type='method'><a href="EventAggregator.html#onceAll">onceAll</a></li>
+                <li data-type='method'><a href="EventAggregator.html#onceAny">onceAny</a></li>
+                <li data-type='method'><a
+                        href="EventAggregator.html#removeListener">removeListener</a></li>
+                <li data-type='method'><a href="EventAggregator.html#removeSource">removeSource</a>
+                </li>
+                <li data-type='method'><a href="EventAggregator.html#reset">reset</a></li>
+            </ul>
+        </li>
+    </ul>
 </nav>
 
 <div id="main">
@@ -57,7 +77,8 @@ of EventEmitters.</p>
 <p>They provide a great way to decouple parts of a system.</p>
 <p>Sometimes, you want to be able to create groups of EventEmitters as a single source
 of events.</p>
-<p>For instance, let's say you have a group of emitters that can all emit a <code>'click'</code> event.
+            <p>For instance, let's say you have a group of sources that can all emit a
+                <code>'click'</code> event.
 Let's say, also, that you want to trigger a handler should <em>any</em> of them emit such an event.</p>
 <p>With Oyez, you can do that easily:</p>
 <pre class="prettyprint source lang-javascript"><code>
@@ -70,7 +91,26 @@ buttons.onAny('click', (source, eventArguments) => {
   console.log('A button was clicked!');
 });</code></pre><h2>Installation</h2><p>Oyez can be installed easily with <code>npm</code></p>
 <pre class="prettyprint source lang-bash"><code>npm install oyez</code></pre><p>Currently, <code>oyez</code> has no dependencies for installation.</p>
-<h2>API</h2><p>The full API is documented at <a href="http://dancrumb.com/oyez/index.html">http://dancrumb.com/oyez/index.html</a>.</p>
+            <h2>API</h2>
+            <p>The API has 4 interesting methods:</p>
+            <ul>
+                <li><code>onAll</code>: like <code>EventEmitter#on</code>, but only triggers
+                    listeners when <em>all</em> of the sources have
+                    emitted
+                </li>
+                <li><code>onAny</code>: like <code>EventEmitter#on</code>, but triggers listeners
+                    when <em>any</em> of the sources have emitted
+                </li>
+                <li><code>onceAll</code>: like <code>EventEmitter#once</code>, but only triggers
+                    listeners when <em>all</em> of the sources have
+                    emitted
+                </li>
+                <li><code>onceAny</code>: like <code>EventEmitter#once</code>, but triggers
+                    listeners when <em>any</em> of the sources have emitted
+                </li>
+            </ul>
+            <p>The full API is documented at <a href="http://dancrumb.com/oyez/index.html">http://dancrumb.com/oyez/index.html</a>.
+            </p>
 <h2>Tests</h2><p>If you've pulled this from Github (rather than installed it from npm), you may wish to 
 run the tests.</p>
 <p>The tests have various dependencies, so make sure to run</p>
