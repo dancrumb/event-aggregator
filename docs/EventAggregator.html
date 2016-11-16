@@ -22,7 +22,7 @@
 <label for="nav-trigger" class="overlay"></label>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="EventAggregator.html">EventAggregator</a><ul class='methods'><li data-type='method'><a href="EventAggregator.html#addEmitter">addEmitter</a></li><li data-type='method'><a href="EventAggregator.html#destroy">destroy</a></li><li data-type='method'><a href="EventAggregator.html#eventsListenedTo">eventNames</a></li><li data-type='method'><a href="EventAggregator.html#onAll">onAll</a></li><li data-type='method'><a href="EventAggregator.html#onAny">onAny</a></li><li data-type='method'><a href="EventAggregator.html#onceAll">onceAll</a></li><li data-type='method'><a href="EventAggregator.html#onceAny">onceAny</a></li><li data-type='method'><a href="EventAggregator.html#removeEmitter">removeEmitter</a></li><li data-type='method'><a href="EventAggregator.html#removeListener">removeListener</a></li><li data-type='method'><a href="EventAggregator.html#reset">reset</a></li></ul></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="EventAggregator.html">EventAggregator</a><ul class='methods'><li data-type='method'><a href="EventAggregator.html#addEmitter">addEmitter</a></li><li data-type='method'><a href="EventAggregator.html#destroy">destroy</a></li><li data-type='method'><a href="EventAggregator.html#eventNames">eventNames</a></li><li data-type='method'><a href="EventAggregator.html#getMaxListeners">getMaxListeners</a></li><li data-type='method'><a href="EventAggregator.html#listenerCount">listenerCount</a></li><li data-type='method'><a href="EventAggregator.html#onAll">onAll</a></li><li data-type='method'><a href="EventAggregator.html#onAny">onAny</a></li><li data-type='method'><a href="EventAggregator.html#onceAll">onceAll</a></li><li data-type='method'><a href="EventAggregator.html#onceAny">onceAny</a></li><li data-type='method'><a href="EventAggregator.html#removeEmitter">removeEmitter</a></li><li data-type='method'><a href="EventAggregator.html#removeListener">removeListener</a></li><li data-type='method'><a href="EventAggregator.html#reset">reset</a></li><li data-type='method'><a href="EventAggregator.html#setMaxListeners">setMaxListeners</a></li></ul></li></ul>
 </nav>
 
 <div id="main">
@@ -70,7 +70,7 @@ with them as a collection (rather than individuals)</p></div>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line93">line 93</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line106">line 106</a>
     </li></ul></dd>
     
 
@@ -224,6 +224,86 @@ Emitters or nothing.</p>
     
 
     
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id=".defaultMaxListeners"><span class="type-signature">(static) </span>defaultMaxListeners<span class="type-signature"> :number</span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line348">line 348</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>The default maximum number of listeners that can be attached to an
+event before a warning is emitted.</p>
+<p>This will be used be all instances of EventEggregator that have not
+manually set this value</p>
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">number</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+    
 
     
         <h3 class="subsection-title">Methods</h3>
@@ -245,7 +325,7 @@ Emitters or nothing.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line126">line 126</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line139">line 139</a>
     </li></ul></dd>
     
 
@@ -379,7 +459,7 @@ Emitters or nothing.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line277">line 277</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line333">line 333</a>
     </li></ul></dd>
     
 
@@ -452,7 +532,7 @@ memory leaks when you're done with the aggregator.</p>
 
     
 
-    <h4 class="name" id="eventsListenedTo"><span class="type-signature"></span>eventNames<span class="signature">()</span><span class="type-signature"> &rarr; {Array.&lt;string>}</span></h4>
+    <h4 class="name" id="eventNames"><span class="type-signature"></span>eventNames<span class="signature">()</span><span class="type-signature"> &rarr; {Array.&lt;string>}</span></h4>
 
     
 
@@ -464,7 +544,7 @@ memory leaks when you're done with the aggregator.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line116">line 116</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line129">line 129</a>
     </li></ul></dd>
     
 
@@ -555,6 +635,263 @@ memory leaks when you're done with the aggregator.</p>
 
     
 
+    <h4 class="name" id="getMaxListeners"><span class="type-signature"></span>getMaxListeners<span class="signature">()</span><span class="type-signature"> &rarr; {Number}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line282">line 282</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Returns the current max listener value for the EventAggregator which is either set by
+aggregator#setMaxListeners(n) or defaults to EventAggregator.defaultMaxListeners.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Number</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="listenerCount"><span class="type-signature"></span>listenerCount<span class="signature">(eventName)</span><span class="type-signature"> &rarr; {Number}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line272">line 272</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Returns the number of listeners listening to the event named eventName.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>eventName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+|
+
+<span class="param-type">Symbol</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Number</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
     <h4 class="name" id="onAll"><span class="type-signature"></span>onAll<span class="signature">(eventName, listener)</span><span class="type-signature"></span></h4>
 
     
@@ -567,7 +904,7 @@ memory leaks when you're done with the aggregator.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line210">line 210</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line223">line 223</a>
     </li></ul></dd>
     
 
@@ -731,7 +1068,7 @@ event.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line187">line 187</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line200">line 200</a>
     </li></ul></dd>
     
 
@@ -891,7 +1228,7 @@ of the arguments that the event included.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line248">line 248</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line261">line 261</a>
     </li></ul></dd>
     
 
@@ -1054,7 +1391,7 @@ event.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line227">line 227</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line240">line 240</a>
     </li></ul></dd>
     
 
@@ -1214,7 +1551,7 @@ of the arguments that the event included.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line146">line 146</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line159">line 159</a>
     </li></ul></dd>
     
 
@@ -1353,7 +1690,7 @@ fires the <code>onAll</code> and <code>onceAll</code> listeners.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line169">line 169</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line182">line 182</a>
     </li></ul></dd>
     
 
@@ -1509,7 +1846,7 @@ fires the <code>onAll</code> and <code>onceAll</code> listeners.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line263">line 263</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line319">line 319</a>
     </li></ul></dd>
     
 
@@ -1639,6 +1976,160 @@ this resets all of the listeners.</p>
 
 
 
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="setMaxListeners"><span class="type-signature"></span>setMaxListeners<span class="signature">(max)</span><span class="type-signature"> &rarr; {<a href="EventAggregator.html">EventAggregator</a>}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line302">line 302</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>By default EventEmitters will print a warning if more than 10 listeners are added for a
+particular event. This is a useful default that helps finding memory leaks. Obviously, not all
+events should be limited to just 10 listeners. The emitter.setMaxListeners() method allows the
+limit to be modified for this specific EventEmitter instance.</p>
+<p>The value can be set to Infinity (or 0) to indicate an unlimited number of listeners.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>max</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>a regerence to this aggregator so that calls can be chained.</p>
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type"><a href="EventAggregator.html">EventAggregator</a></span>
+
+
+    </dd>
+</dl>
+
+    
 
 
         
